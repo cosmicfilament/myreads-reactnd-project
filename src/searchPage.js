@@ -11,13 +11,17 @@ export default class SearchPage extends React.Component {
     }
 
     render() {
+
+        const { shelves } = this.props;
+
         return (
             <div className="search-books">
-                <div className="search-books-bar">
-                    <Link
-                        to='/Home'
-                        className="close-search"
-                    >Close</Link>
+                <Link
+                    to='/'
+                    className="close-search-link">
+                    Close
+                </Link>
+                <div className="search-books-control">
                     <div className="search-books-input-wrapper">
                         {/*
                   NOTES: The search from BooksAPI is limited to a particular set of search terms.

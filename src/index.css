@@ -10,9 +10,28 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+/* header */
+.header-books-title {
+  padding: 10px 0;
+  background: #2e7c31;
+  text-align: center;
+}
+
+.header-books-title h1 {
+  font-weight: 400;
+  margin: 0;
+  color: white;
+}
+
+/* footer */
+
+/* ToDo: add a footer  */
+
+
+
 /* main page */
 
-.list-books-title {
+/* .list-books-title {
   padding: 10px 0;
   background: #2e7c31;
   text-align: center;
@@ -22,7 +41,7 @@ body {
   font-weight: 400;
   margin: 0;
   color: white;
-}
+} */
 
 .list-books-content {
   padding: 0 0 80px;
@@ -75,10 +94,26 @@ body {
 
 /* search page */
 
-.search-books-bar {
+.close-search-link {
+  display: block;
   position: fixed;
-  width: 100%;
   top: 0;
+  left: 15px;
+  width: 50px;
+  height: 53px;
+  background-image: url('./icons/arrow-back.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 28px;
+  font-size: 0;
+  border: none;
+  outline: none;
+}
+
+.search-books-control {
+  position: fixed;
+  width: 300px;
+  top: 150;
   left: 0;
   z-index: 5;
   display: flex;
@@ -90,25 +125,10 @@ body {
   background: #e9e;
 }
 
-.search-books-bar input {
+.search-books-control input {
   width: 100%;
   padding: 15px 10px;
   font-size: 1.25em;
-  border: none;
-  outline: none;
-}
-
-.close-search {
-  display: block;
-  top: 20px;
-  left: 15px;
-  width: 50px;
-  height: 53px;
-  background-image: url('./icons/arrow-back.svg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 28px;
-  font-size: 0;
   border: none;
   outline: none;
 }
@@ -162,7 +182,7 @@ button:active {
   align-items: flex-end;
 }
 
-.book-shelf-changer {
+.book-shelf-selector {
   position: absolute;
   right: 0;
   bottom: -10px;
@@ -177,7 +197,7 @@ button:active {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-.book-shelf-changer select {
+.book-shelf-selector select {
   width: 100%;
   height: 100%;
   opacity: 0;
@@ -189,6 +209,8 @@ button:active {
 .book-cover {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   background: #eee;
+  width: 128px;
+  height: auto;
 }
 
 .book-cover-title {
