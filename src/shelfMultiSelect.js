@@ -4,33 +4,31 @@ export default class ShelfMultiSelect extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // selected is the index value of the selected option
-            selected: this.props.index
+            value: this.props.value
         };
-        // handle to the select control
-        this.selector = null;
         this.handleChange = this.handleChange.bind(this);
     }
-
-    componentDidMount() {
-        this.selector.selectedIndex = this.state.selected;
-    }
-
-    handleChange(event) {
-        event.preventDefault();
+    // handleChange will also percolate up to the app which will
+    // pass this books shelf change and send it back down the chain
+    handleChange(value) {
         this.setState(() => ({
-            selected: event.target.selectedIndex
+            value: value
         }));
     }
 
-    // ToDo: implement Move to .... functionality
-
     render() {
+
+        const { value } = this.state;
+        const { id } = this.props;
+        const handleChange = this.handleChange;
+
         return (
             <div className="book-shelf-selector" >
                 <select
-                    ref={select => this.selector = select}
-                    onChange={this.handleChange}
+                    onChange={(e) => handleChange(e.target.value)}
+                    value={value}
+                    id={id}
+                    name={'book-shelf-selector'}
                 >
                     <option value="move">Move to...</option>
                     <option value="currentlyReading">Currently Reading</option>

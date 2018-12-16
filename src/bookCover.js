@@ -1,9 +1,18 @@
 import React from 'react';
+import helpers from './helpers';
 
-const BookCover = ({ url }) => {
+const BookCover = ({ image }) => {
+
     return (
-        // all books have a constant width, height is set to auto in the css
-        <div className="book-cover" style={{ backgroundImage: 'url("{url}")' }}></div>
+        <div className="book-cover" style={{
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            backgroundSize: 'contain',
+            width: helpers.imageWidth,
+            height: '100%',
+            backgroundImage: `url("${image}")`
+        }}
+        />
     );
 };
 
