@@ -10,26 +10,37 @@ import BookList from './bookList';
 // However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
 // you don't find a specific author or title. Every search is limited by search terms.
 
+// search page reuses the BookList that is also used by the Shelf component for the HomePage
+// search is conducted when the user hits 'Enter'
 export default class SearchPage extends React.Component {
     constructor(props) {
         super(props);
-
+        // search query
+        this.state = {
+            query: this.props.query
+        };
+        this.clearQuery = this.clearQuery.bind(this);
         this.updateQuery = this.updateQuery.bind(this);
     }
 
     static propTypes = {
+        // search list array
         list: PropTypes.array.isRequired,
+        // event handler in app.js that performs the actual search
         OnSearch: PropTypes.func
     }
-
-    state = {
-        query: '',
-    };
 
     updateQuery = (query) => {
         this.setState(() => ({
             query: query
         }));
+    }
+
+    clearQuery = () => {
+        this.setState(() => ({
+            query: ''
+        }));
+        this.props.onSearch('Enter', '');
     }
 
     render() {
@@ -53,6 +64,13 @@ export default class SearchPage extends React.Component {
                             onChange={(e) => this.updateQuery(e.target.value)}
                             placeholder="Search by title or author"
                         />
+                    </div>
+                    <div className="search-books-clear-wrapper">
+                        <button
+                            className="search-books-clear"
+                            onClick={(e) => this.clearQuery()}>
+                            Clear Search
+                        </button>
                     </div>
                 </div>
                 <div className="search-books-results">

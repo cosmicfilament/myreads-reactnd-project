@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import BookList from './bookList';
 import helpers from './helpers';
 
-// a shelf is where the list is starting to be specialized
-// the query is used to reduce the size of the list
+// a shelf is where the list is filtered to a particular shelf
 const Shelf = ({ query, list }) => {
 
     const thisList = list.filter(item => item.shelf === query);
@@ -22,6 +21,6 @@ const Shelf = ({ query, list }) => {
 Shelf.propTypes = {
     list: PropTypes.array.isRequired,
     query: PropTypes.string.isRequired
-}
+};
 
 export default Shelf;

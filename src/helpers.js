@@ -4,6 +4,7 @@ const helpers = {};
 // found that most if not all images had this width
 helpers.imageWidth = 128;
 
+// used in the multiselect control
 helpers.shelves = {
     move: 'Move',
     currentlyReading: 'Currently Reading',
@@ -12,6 +13,7 @@ helpers.shelves = {
     none: 'None'
 };
 
+// super typeof
 helpers._typeof = (value) => {
     if (value === null) {
         return value;

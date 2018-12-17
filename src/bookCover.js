@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import helpers from './helpers';
 
 const BookCover = ({ image }) => {
@@ -14,6 +15,12 @@ const BookCover = ({ image }) => {
         }}
         />
     );
+};
+
+// an image is not required as some book
+// objects are missing a book image
+BookCover.propTypes = {
+    image: PropTypes.string
 };
 
 export default BookCover;

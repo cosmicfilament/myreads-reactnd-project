@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import BookCover from './bookCover'
+import BookCover from './bookCover';
 import ShelfMultiSelect from './shelfMultiSelect';
 import PropTypes from 'prop-types';
 
+// a Book encapsulates the jsonData object downloaded from the server
+// and exposes it to its child objects
 export default class Book extends Component {
 
     static propTypes = {
@@ -28,8 +30,6 @@ export default class Book extends Component {
     get id() {
         return this.props.book.id;
     }
-
-    // ToDo: Need to be able to change the book shelf and pass that up the chain
 
     render() {
         return (

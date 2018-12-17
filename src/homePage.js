@@ -1,7 +1,10 @@
 import React from 'react';
 import Shelf from './shelf';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+// The HomePage passes the list to each of 3 sections
+// with a different query clause for each section
 const HomePage = ({ list }) => {
 
     return (
@@ -22,6 +25,10 @@ const HomePage = ({ list }) => {
             </div>
         </div>
     );
+};
+
+HomePage.propTypes = {
+    list: PropTypes.array.isRequired
 };
 
 export default HomePage;
