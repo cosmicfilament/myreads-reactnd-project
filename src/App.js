@@ -3,6 +3,7 @@ import HomePage from './homePage';
 import SearchPage from './searchPage';
 import * as BooksAPI from './BooksAPI';
 import helpers from './helpers';
+// package is on npm gives a nice alert msg with many options
 import swal from 'sweetalert';
 
 import {

@@ -13,7 +13,7 @@ helpers.shelves = {
     none: 'None'
 };
 
-// super typeof
+// grabbed the idea for this from http://bonsaiden.github.io/JavaScript-Garden/#types.typeof
 helpers._typeof = (value) => {
     if (value === null) {
         return value;
