@@ -1,10 +1,12 @@
 {
   "name": "myreads-app",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
+    "lodash.clonedeep": "^4.5.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
+    "react-debounce-input": "^3.2.0",
     "react-dom": "^16.6.3",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
@@ -24,5 +26,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "babel-eslint": "^9.0.0",
+    "eslint-plugin-flowtype": "^2.50.3"
+  }
 }

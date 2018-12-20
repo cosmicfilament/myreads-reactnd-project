@@ -6,40 +6,33 @@ import PropTypes from 'prop-types';
 // App.js subscribes to the select control's onChange event and updates
 // the state of the book item which percolates back down to the child components.
 export default class ShelfMultiSelect extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: this.props.value
-        };
-        this.handleChange = this.handleChange.bind(this);
-    }
+
+    state = { value: this.props.value }
 
     static propTypes = {
         // the id is used in the onChange event to identify the book
-        id: PropTypes.string.isRequired,
+        book: PropTypes.object.isRequired,
         // event handler in app.js that listens for this event
         // and updates the state of the correct book
         handleChange: PropTypes.func
     }
 
-    handleChange(value) {
-        this.setState(() => ({
-            value: value
-        }));
+    handleChange = (value) => {
+        this.setState({ value: value });
     }
 
     render() {
 
         const { value } = this.state;
-        const { id } = this.props;
+        const { book } = this.props;
         const handleChange = this.handleChange;
 
         return (
             <div className="book-shelf-selector" >
                 <select
-                    onChange={(e) => handleChange(e.target.value)}
+                    onChange={(e) => handleChange()}
                     value={value}
-                    id={id}
+                    slot={JSON.stringify(book)}
                     name={'book-shelf-selector'}
                 >
                     <option value="move" disabled>Move to...</option>

@@ -1,86 +1,102 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import BookList from './bookList';
+/* eslint-disable no-console */
 
-// NOTES: The search from BooksAPI is limited to a particular set of search terms.
-// You can find these search terms here:
+import React from 'react';
+import { DebounceInput } from 'react-debounce-input';
+import * as BooksAPI from './BooksAPI';
+import PropTypes from 'prop-types';
+import helpers from './helpers';
+import SearchPageClose from './searchPageClose';
+import SearchPageResults from './searchPageResults';
+
 // https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
 
-// However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-// you don't find a specific author or title. Every search is limited by search terms.
 
-// search page reuses the BookList that is also used by the Shelf component for the HomePage
-// search is conducted when the user hits 'Enter'
+// searches the server for books that match the search criteria
 export default class SearchPage extends React.Component {
-    constructor(props) {
-        super(props);
-        // search query
-        this.state = {
-            query: this.props.query
-        };
-        this.clearQuery = this.clearQuery.bind(this);
-        this.updateQuery = this.updateQuery.bind(this);
-    }
-
     static propTypes = {
-        // search list array
-        list: PropTypes.array.isRequired,
-        // event handler in app.js that performs the actual search
-        OnSearch: PropTypes.func
+        cacheRef: PropTypes.instanceOf(Map).isRequired
     }
 
-    updateQuery = (query) => {
-        this.setState(() => ({
-            query: query
-        }));
+    // keeps the search list in sync with the cache
+    // for any items that are in both lists
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const list = prevState.searchList;
+        const cacheRef = nextProps.cacheRef;
+        let dirty = false;
+
+        list.map((listItem) => {
+            if (cacheRef.has(listItem.id)) {
+                dirty = true;
+                const cacheItem = cacheRef.get(listItem.id);
+                listItem.shelf = cacheItem.shelf;
+
+                console.log(`getDerivedStateFromProps: target: ${listItem.id}, shelf: ${listItem.shelf}`);
+            }
+            return listItem;
+        });
+
+        if (dirty) {
+            return { searchList: list };
+        }
+        return null;
     }
 
-    clearQuery = () => {
-        this.setState(() => ({
-            query: ''
-        }));
-        this.props.onSearch('Enter', '');
+    state = {
+        searchList: [],
+        query: ''
+    }
+
+    search = (e) => {
+        e.preventDefault();
+        const query = e.target.value;
+        // the if statement handles empty string for us
+        // like when you erase the whole search string
+        if (helpers.validateString(query)) {
+            BooksAPI.search(query)
+                .then((jsonData) => {
+                    // terniary statement handles no search results
+                    jsonData = helpers.validateArray(jsonData) ? jsonData : [];
+                    return jsonData.map((item) => {
+                        return item;
+                    });
+                })
+                .then((searchList) => {
+                    this.setState({ searchList, query });
+                });
+        }
+        else {
+            this.setState({
+                searchList: [],
+                query: ''
+            });
+        }
     }
 
     render() {
-
-        const { query } = this.state;
-        const { list, onSearch } = this.props;
+        const { searchList, query } = this.state;
+        const { search } = this;
 
         return (
             <div className="search-books" >
-                <Link
-                    to='/'
-                    className="close-search-link">
-                    Close
-                </Link>
+                <SearchPageClose />
                 <div className="search-books-control">
                     <div className="search-books-input-wrapper">
-                        <input
+                        <DebounceInput
+                            className="search-books-input"
                             type="text"
+                            debounceTimeout={500}
                             value={query}
-                            onKeyUp={(e) => onSearch(e.key, e.target.value)}
-                            onChange={(e) => this.updateQuery(e.target.value)}
+                            onChange={search}
                             placeholder="Search by title or author"
                         />
                     </div>
-                    <div className="search-books-clear-wrapper">
-                        <button
-                            className="search-books-clear"
-                            onClick={(e) => this.clearQuery()}>
-                            Clear Search
-                        </button>
-                    </div>
                 </div>
-                <div className="search-books-results">
-                    <div className="bookshelf" >
-                        <h2 className="bookshelf-title">{`Search results for query: ${query}`}</h2>
-                        <div className="bookshelf-books">
-                            <BookList filteredList={list} />
-                        </div>
-                    </div>
-                </div>
+                <SearchPageResults
+                    title={`Search results for query: ${query}`}
+                    searchList={searchList}
+
+
+                />
             </div>
         );
     }

@@ -17,10 +17,8 @@ const BookCover = ({ image }) => {
     );
 };
 
-// an image is not required as some book
-// objects are missing a book image
 BookCover.propTypes = {
-    image: PropTypes.string
+    image: PropTypes.string.isRequired
 };
 
 export default BookCover;
